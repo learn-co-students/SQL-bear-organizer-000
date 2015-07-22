@@ -47,7 +47,7 @@ describe 'querying the bears table' do
 
   it 'selects the most prominent color and returns it with its count' do
     sql = <<-SQL
-    SELECT MAX(color), COUNT(color) FROM bears WHERE color = 'dark brown'
+    SELECT color, COUNT(color) AS "color_current" FROM bears GROUP BY color ORDER BY "color_current" DESC LIMIT 1;
     SQL
     expect(@db.execute(sql)).to eq([["dark brown", 3]])
   end
